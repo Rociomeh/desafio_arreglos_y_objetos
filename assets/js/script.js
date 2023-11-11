@@ -1,8 +1,3 @@
-const colores = {
-    permitido: "green",
-    prohibido: "red",
-};
-
 const venta = [
     {
         src: "https://fotos.perfil.com/2018/09/21/trim/950/534/nueva-york-09212018-366965.jpg",
@@ -12,18 +7,7 @@ const venta = [
         habitaciones: 4, 
         costo: 5500, 
         smoke: false,
-        pets: false,
-        getStatusMessage: function () {
-            if (this.smoke && this.pets) {
-                return "Se permite fumar y tener mascotas.";
-            } else if (this.smoke) {
-                return "Se permite fumar, pero no tener mascotas.";
-            } else if (this.pets) {
-                return "Se permite tener mascotas, pero no fumar.";
-            } else {
-                return "No se permite fumar ni tener mascotas.";
-            }
-        },
+        pets: false
     },
 
     {
@@ -51,60 +35,59 @@ const venta = [
 
 //ESTE VA EN LA PAGINA DE VENTA.HTML
 
-const d = document.querySelector(".articulo") //definir una clase como card en el html dentro de un section  que tenga class = "card"
-html = "" //inicia una variable vacia del html
+const d = document.querySelector(".venta") //define la clase 'venta; que está en el html
 for(let propiedad of venta) {
-    console.log(propiedad);
-        d.innerHTML += ` <article>
-                        <h4> ${propiedad.nombre} </h6>
-                        <img src= "${propiedad.src}" >
-                        <h6> ${propiedad.descripción} </h6>
-                        <h6> ${propiedad.habitaciones} </h6>
-                        <h6> ${propiedad.costo} </h6>
-                        <h6> ${propiedad.smoke} </h6>
-                        <h6> ${propiedad.pets} </h6>
-                        </article>`;
-    
-}
-hmtl = d;
-
-/*let html = "";
-    const productos = [
-      {
-        id: 43,
-        descripcion: " prueba",
-        control: true,
-        src:"https://doa.gov.lk/wp-content/uploads/2019/12/300-3001828_address-icon-png.png"
-      },
-      {
-        id: 44,
-        descripcion: " prueba",
-        control: false,
-      },
-    ];
-
-    for (let producto of productos) {
-      let imagenTemporal = "";
-      if (producto.control) {
-        imagenTemporal = `  <img src="${producto.src}" style="width:100px">`;
-      } else {
-        imagenTemporal = "";
-      }
-      html += `<div class="item">
-        ${imagenTemporal}
-    <p>${producto.descripcion}</p>
-    </div>
-    `;
-    }
-
-    document.getElementById("productos").innerHTML = html;
-    
-    const producto = {
-id: 43,
-titulo: "Cafetera magnética",
-precio: 23990,
-color: "rojo",
-src: "...", // ingresa aquí la URL de la imagen, descripción: `Calienta tu café matutino
-con la nueva tecnología magnética`
-};
-    */
+    let html = ` 
+         <div class="col-md-4 mb-4"> 
+           <div class="card" id="card">
+             <img
+                 src="${propiedad.src}" 
+                 class="card-img-top"
+                 alt="Imagen del departamento"
+             />
+             <div class="card-body">
+                 <h5 class="card-title">
+                 ${propiedad.nombre}
+                 </h5>
+                 <p class="card-text">
+                     ${propiedad.descripción}
+                 </p>
+                 <p>
+                 <i class="fas fa-map-marker-alt"></i> ${propiedad.ubicación}
+                 </p>
+                 <p>
+                 <i class="fas fa-bed">${propiedad.habitaciones}</i> Habitaciones |
+                 <i class="fas fa-bath">${propiedad.habitaciones}</i> Baños
+                 </p>
+                 <p><i class="fas fa-dollar-sign">${propiedad.costo}</i></p>     
+         `;
+     if(propiedad.smoke == true){
+         html += `
+         <p class="text-success">
+                 <i class="fas fa-smoking"></i> Se permite fumar
+                 </p>       
+         `;
+     }else if(propiedad.smoke == false){
+         html += `
+         <p class="text-danger">
+                 <i class="fas fa-smoking-ban"></i> No se permite fumar
+                 </p>       
+         `;
+     };
+     if(propiedad.pets == true){
+         html += ` 
+                  <p class="text-success">
+                 <i class="fas fa-paw"></i> Se permiten mascotas
+                 </p> 
+             </div> 
+         </div> `;
+     }else if(propiedad.pets == false){
+         html += ` 
+                  <p class="text-danger">
+                 <i class="fas fa-ban"></i> No se permiten mascotas
+                 </p> 
+             </div> 
+         </div> `;
+     };
+     d.innerHTML += html;
+}  
